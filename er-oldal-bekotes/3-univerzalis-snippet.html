@@ -1,0 +1,46 @@
+<!-- ═══════════════════════════════════════════════════════════════════
+  UNIVERZÁLIS SNIPPET — bármilyen oldalhoz (nem csak Next.js-hez)
+  Illeszd be az oldal <head> részébe (vagy a záró </body> elé).
+
+  Ez a kód:
+  1. elmenti a ?ref= paramétert 60 napos cookie-ba,
+  2. HA Stripe Payment Linkeket használtok (buy.stripe.com), automatikusan
+     rájuk teszi a client_reference_id-t — ilyenkor MÁS MÓDOSÍTÁS NEM KELL.
+  Szerveroldali Checkout Session esetén az 1. pont fut, a kódot pedig a
+  szerveren kell átadni (lásd: 2-checkout-egy-sor.ts).
+═══════════════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  var m = location.search.match(/[?&]ref=([A-Za-z0-9_-]{4,32})/);
+  if (m) {
+    document.cookie =
+      "er_ref=" + m[1].toUpperCase() +
+      "; max-age=" + 60 * 60 * 24 * 60 +
+      "; path=/; SameSite=Lax; Secure";
+  }
+  function getRef() {
+    var c = document.cookie.match(/(?:^|;\s*)er_ref=([A-Za-z0-9_-]+)/);
+    return c ? c[1] : null;
+  }
+  // Stripe Payment Linkek automatikus kiegészítése
+  function patchLinks() {
+    var ref = getRef();
+    if (!ref) return;
+    var links = document.querySelectorAll('a[href*="buy.stripe.com"]');
+    for (var i = 0; i < links.length; i++) {
+      try {
+        var u = new URL(links[i].href);
+        if (!u.searchParams.get("client_reference_id")) {
+          u.searchParams.set("client_reference_id", ref);
+          links[i].href = u.toString();
+        }
+      } catch (e) {}
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", patchLinks);
+  } else {
+    patchLinks();
+  }
+})();
+</script>

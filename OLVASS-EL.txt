@@ -1,0 +1,71 @@
+================================================================
+  ÉR AFFILIATE RENDSZER  ·  kész csomag
+================================================================
+
+Ez egy teljes partnerprogram-rendszer az Étkezési Rendszerhez:
+partneri linkek, kattintásmérés, automatikus jutalékszámítás a
+Stripe-ból, admin felület és kifizetési lista.
+
+
+MI HOL VAN EBBEN A MAPPÁBAN?
+----------------------------------------------------------------
+
+  BEKOTES.md            <-- EZZEL KEZDD. Lépésről lépésre
+                            beüzemelési útmutató, kb. 30-40 perc.
+
+  DONTESEK.md           <-- EZT IS OLVASD EL, MIELŐTT ELINDULSZ.
+                            20 kérdés, ahol a rendszernek választania
+                            kellett, és a választás nem magától
+                            értetődő. Kinek jár a jutalék, ha a vevő
+                            két partneren is járt? Bruttóból vagy
+                            nettóból? Ezeket neked kell eldönteni,
+                            és beleírni a partneri feltételekbe.
+                            A végén kitölthető döntési tábla.
+
+  MUKODES.md                Teljes működési leírás: mit csinál a
+                            rendszer, mikor és miért. Adatmodell,
+                            állapotok, a Stripe-események feldolgozása,
+                            biztonság, hibakeresés. Ha valami furcsa,
+                            itt a válasz.
+
+  DEMO.md                   Kipróbálás fiókok nélkül, mintaadatokkal.
+
+  INDITAS-WINDOWS.bat       Windowson egy dupla kattintás: elindítja
+                            a demót és megnyitja a böngészőben.
+
+  er-oldal-bekotes/         AMIT AZ ETKEZESIRENDSZER.HU OLDALBA
+                            KELL BEILLESZTENI. Összesen ~15 sor.
+                            Nem az alkalmazás része, külön van,
+                            hogy egyértelmű legyen, mi megy hova.
+
+  src/, supabase/,          MAGA AZ ALKALMAZÁS. Ehhez nem kell
+  package.json, stb.        hozzányúlni, csak feltelepíteni.
+
+
+NÉGY DOLOG, AMIT ÉRDEMES TUDNI
+----------------------------------------------------------------
+
+1. A rendszer a SAJÁT fiókjaidban fut (Supabase + Vercel, mindkettő
+   ingyenes szinten elég). Senki másnak nem marad hozzáférése.
+
+2. NEM kell Stripe API kulcs. A rendszer csak értesítéseket fogad a
+   Stripe-tól, a fiókodhoz nem fér hozzá, pénzt mozgatni nem tud.
+
+3. Vásárlói személyes adatot nem tárol: se nevet, se e-mail címet.
+   Csak azonosítót és összeget.
+
+4. A PARTNERTŐL SEM KÉR CÉGES ADATOT. Csak név, e-mail, jelszó, és
+   a kifizetéshez bankszámlaszám. Cégnév, adószám, székhely nincs.
+   A kifizetés adózási kezelését a könyvelőddel érdemes tisztázni.
+
+
+GYORS INDULÁS
+----------------------------------------------------------------
+
+  Kipróbálás:   nyisd meg a DEMO.md fájlt  (vagy Windowson kattints
+                duplán az INDITAS-WINDOWS.bat fájlra)
+
+  Éles indulás: nyisd meg a BEKOTES.md fájlt,
+                majd a DONTESEK.md fájlt
+
+================================================================
